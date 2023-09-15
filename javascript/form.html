@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <form>
+    <fieldset>
+      <legend>회원가입</legend>
+      <div >
+        <label for="userName">이름 :</label>
+        <input type="text" id="userName" required>
+      </div>
+      <div class="userid">
+        <label for="userid">아이디 :</label>
+        <input type="text" id="userid" required>
+        <button type="button"> 아이디 중복확인</button>
+        <p class="text">* 4~12글자까지만 입력 가능합니다.</p>
+      </div>
+      <div class="inputPassword">
+        <label for="userpw">비밀번호 :</label>
+        <input type="password" id="userpw" required>
+        <p class="text">* 4~12글자까지만 입력 가능합니다.</p>
+      </div>
+      <div>
+        <label for="userpwCheck">비밀번호 확인:</label>
+        <input type="password" id="userpwCheck" required>
+      </div>
+      <div>
+        <label for="userBirth">생년월일 :</label>
+        <input type="text" id="userBirth" required>
+        <p class="text">* ex)19981008 ~ 8자리로 입력</p>
+      </div>
+      <div>
+        <p>
+          <input type="text" id="zip-code" placeholder="우편번호">
+          <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
+        <p>
+        </p>
+        <input type="text" id="address-1" placeholder="도로명주소" style="width: 500px">
+        <p>
+        </p>
+        <input type="text" id="address-2" placeholder="상세주소" style="width: 500px">
+        </p>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+          function execDaumPostcode() {
+            new daum.Postcode({
+              oncomplete: function (data) {
+                document.getElementById('zip-code').value = data.zonecode;
+                document.getElementById('address-1').value = data.address;
+              }
+            }).open();
+          }
+        </script>
+
+      </div>
+      <div>
+        <p>
+          <label>이메일 :</label>
+          <label for="maul1" title="이메일 아이디"></label>
+          <input id="maul1" type="maul" required>@
+          <label for="maul2" title="이메일 주소"></label>
+          <input id="maul2" type="maul" required>
+          <select name="" id="">
+            <option value="">직접입력</option>
+            <option value="naver.com">naver.com</option>
+            <option value="gmail.com">gmail.com</option>
+          </select>
+        </p>
+      </div>
+      <div>
+        <label>전화번호 :</label>
+        <label for="tel1" title="천번째 전화번호 세자리 수" required></label>
+        <input id="tel1" type="tel">-
+        <label for="tel2" title="두번쨰 전화번호 네자리 수" required></label>
+        <input id="tel2" type="tel">-
+        <label for="tel3" title="세번쨰 전화번호 네자리 수" required></label>
+        <input id="tel3" type="tel">
+        <p class="text">* '~'없이 숫자만 입력</p>
+      </div>
+      <div>
+        <input type="checkbox" id="checked" name="checked" value="chedkbox" required>
+        <label for="checked"> 약관동의</label>
+        <p class="text">* 필수</p>
+      </div>
+
+      <button type="button">이전으로</button>
+      <button class="join">회원가입</button>
+    </fieldset>
+  </form>
+
+  <script>
+    document.querySelector('.join').addEventListener('click', e => {
+      let userId = document.querySelector('#userid')
+      let userPw = document.querySelector('#userpw')
+
+      if (!userId.value ) {
+        document.querySelector('.userid .text').innerHTML='* 필수 입력 사항입니다'
+        document.querySelector('.userid .text').style.color='red'
+      }else if (userId.value.length < 4 || userId.value.length > 12){
+        document.querySelector('.userid .text').innerHTML='* 4~12글자까지만 입력 가능합니다.'
+        document.querySelector('.userid .text').style.color='red'
+      }else if (userId.value.length >= 4 && userId.value.length <= 12){
+        document.querySelector('.userid .text').innerHTML=''
+      }
+
+      if (!userpw.value ) {
+        document.querySelector('.inputPassword .text').innerHTML='* 필수 입력 사항입니다'
+        document.querySelector('.inputPassword .text').style.color='red'
+      }else if (userpw.value.length < 4 || userpw.value.length > 12){
+        document.querySelector('.inputPassword .text').innerHTML='* 4~12글자까지만 입력 가능합니다.'
+        document.querySelector('.inputPassword .text').style.color='red'
+      }else if (userpw.value.length >= 4 && userpw.value.length <= 12){
+        document.querySelector('.inputPassword .text').innerHTML=''
+      }
+
+    })
+  </script>
+
+</body>
+
+</html>

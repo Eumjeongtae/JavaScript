@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+</head>
+
+<body>
+
+  <form>
+    <fieldset>
+      <legend>회원가입</legend>
+      <div>
+        <label for="userName">이름 :</label>
+        <input type="text" id="userName" required>
+        <span class="err-name"></span>
+      </div>
+      <div class="userid">
+        <label for="userid">아이디 :</label>
+        <input type="text" id="userid" required>
+        <button type="button"> 아이디 중복확인</button>
+        <p class="err-id">* 4~12글자까지만 입력 가능합니다.</p>
+      </div>
+      <div class="inputPassword">
+        <label for="userpw">비밀번호 :</label>
+        <input type="password" id="userpw" required>
+        <p class="err-pw">* 4~12글자까지만 입력 가능합니다.</p>
+      </div>
+      <div>
+        <label for="userpwCheck">비밀번호 확인:</label>
+        <input type="password" id="userpwCheck" required>
+        <p class="err-pwchk"></p>
+      </div>
+      <div>
+        <label for="userBirth">생년월일 :</label>
+        <input type="text" id="userBirth" required>
+        <p class="err-birth">* ex)19981008 ~ 8자리로 입력</p>
+      </div>
+      <div>
+
+
+        <p>
+          <input type="text" id="address1" placeholder="우편번호">
+          <input type="button" id="apiSearch"  value="우편번호 찾기">
+        <p>
+        </p>
+        <input type="text" id="address2" placeholder="도로명주소" style="width: 500px">
+        <p>
+        </p>
+        <input type="text" id="address3" placeholder="상세주소" style="width: 500px">
+        </p>
+
+      </div>
+      <div>
+        <p>
+          <label>이메일 :</label>
+          <label for="maul1" title="이메일 아이디"></label>
+          <input id="maul1" type="mail" required>@
+          <label for="maul2" title="이메일 주소"></label>
+          <input id="maul2" type="mail" required>
+          <select name="" id="mailbox">
+            <option value="">직접입력</option>
+            <option value="naver.com">naver</option>
+            <option value="gmail.com">google</option>
+          </select>
+        </p>
+      </div>
+      <div>
+
+        <label for="tel1" required>전화번호</label>
+        <input id="tel1" type="tel">
+
+        <p class="err-tel">* '~'없이 숫자만 입력</p>
+      </div>
+      <div>
+        <input type="checkbox" id="checked" name="checked" value="chedkbox" required>
+        <label for="checked"> 약관동의</label>
+        <p class="text">* 필수</p>
+      </div>
+
+      <button type="button">이전으로</button>
+      <button class="join">회원가입</button>
+    </fieldset>
+  </form>
+
+  <script>
+    let add1
+    let add2
+
+    function execDaumPostcode() {
+      new daum.Postcode({
+        oncomplete: function (data) {
+          add1 = document.getElementById('address1').value
+          add2 = document.getElementById('address2').value
+          document.getElementById('address1').value = data.zonecode;
+          document.getElementById('address2').value = data.address;
+        }
+      }).open();
+    }
+
+    var textColorChange = (err_txt) => {
+      err_txt.style.color = 'red'
+    }
+
+    let form_check = () => {
+
+      let userName = document.querySelector('#userName')
+      let userid = document.querySelector('#userid')
+      let userpw = document.querySelector('#userpw')
+      let userpwCheck = document.querySelector('#userpwCheck')
+      let userBirth = document.querySelector('#userBirth')
+      let tel1 = document.querySelector('#tel1')
+      let checkedbtn = document.querySelector('#checked')
+
+
+      console.log(obj);
+
+      if (userName.value == '') {
+        var err_txt = document.querySelector('.err-name')
+        err_txt.innerHTML = '* 이름을 입력해주세요'
+        textColorChange(err_txt)
+        userName.focus()
+        return false
+      } //name
+
+      if (userid.value == '') {
+        var err_txt = document.querySelector('.err-id')
+        err_txt.innerHTML = '* 아이디 입력해주세요'
+        textColorChange(err_txt)
+        userid.focus()
+        return false
+      } // id
+
+      if (userid.value.length < 4 || userid.value.length > 12) {
+        var err_txt = document.querySelector('.err-id')
+        err_txt.innerHTML = '* 4~12글자까지만 입력 가능합니다'
+        textColorChange(err_txt)
+        userid.focus()
+        return false
+      }// id
+
+      if (userpw.value == '') {
+        var err_txt = document.querySelector('.err-pw')
+        err_txt.innerHTML = '* 비밀번호를 입력해주세요'
+        textColorChange(err_txt)
+        userpw.focus()
+        return false
+      } //passwd
+
+      if (userpw.value.length < 4 || userpw.value.length > 12) {
+        var err_txt = document.querySelector('.err-pw')
+        err_txt.innerHTML = '* 4~12글자까지만 입력 가능합니다'
+        textColorChange(err_txt)
+        userpw.focus()
+        return false
+      } // passwd
+
+      if (userpw.value !== userpwCheck.value) {
+        document.querySelector('.err-pwchk').innerHTML = '비밀번호를 확인해주세요'
+        var err_txt = document.querySelector('.err-pwchk')
+        textColorChange(err_txt)
+        userpwCheck.focus()
+        return false
+      }//passwd check
+
+      if (userBirth.value == '') {
+        var err_txt = document.querySelector('.err-birth')
+        err_txt.innerHTML = '* 생년월일을 입력해주세요'
+        textColorChange(err_txt)
+        userBirth.focus()
+        return false
+      }
+
+      if (userBirth.value.length !== 8) {
+        var err_txt = document.querySelector('.err-birth')
+        err_txt.innerHTML = '* ex)19981008 ~ 8자리로 입력'
+        textColorChange(err_txt)
+        userBirth.focus()
+        return false
+      }
+
+      if ((tel1.value).includes('-')) {
+
+
+        var err_txt = document.querySelector('.err-tel')
+        err_txt.innerHTML = "* '-' 없이 입려쇄주세요"
+        textColorChange(err_txt)
+        tel1.focus()
+        return false
+      } //name
+
+      if (!checkedbtn.checked) {
+        alert('약관동의 체크')
+      }
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', e => {
+      document.querySelector('.join').addEventListener('click', e => {
+        e.preventDefault()
+        form_check()
+      })
+
+      document.querySelector('#mailbox').addEventListener('change', e => {
+        document.querySelector('#maul2').value = e.target.value
+      })
+
+      document.querySelector('#apiSearch').addEventListener('click', e => {
+        execDaumPostcode()
+      })
+    })
+
+
+  </script>
+
+</body>
+
+</html>

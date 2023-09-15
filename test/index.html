@@ -13,7 +13,7 @@
   <script>
     const getData = () => {
       return new Promise(async (resolve, reject) => {
-        let result = await fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users?nickname=하늘`,headers = {"Authorization" : })
+        let result = await fetch(`https://pokeapi.co/api/v2/pokemon/ditto`)
         let data = await result.json()
         console.log(data);
 
